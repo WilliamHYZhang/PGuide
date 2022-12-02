@@ -15,11 +15,44 @@
         <div class="mb-3">
             <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="psets" placeholder="# of PSETs" type="number">
         </div>
-        <button class="btn btn-primary" type="submit" id="create-pset">Create</button>
+        <button class="btn btn-primary" type="button" onclick="update()">Create</button>
+        <p id="psets_down"></p>
+        <button class="btn btn-primary" type="submit">Submit</button>     
     </form>
 
-    document.querySelector('create-pset')
-    {% for pset in psets %}
-        <div id="forms" style="display:none;"></div>
-    {% endfor %}
+    <script>
+        var down = document.getElementById("psets_down");
+        function update(){
+            // Get number of psets
+            let pset_count = document.getElementById("psets");
+
+            // Create a form dynamically
+            var form = document.createElement("form");
+            form.setAttribute("method", "post");
+            form.setAttribute("action", "submit.php");
+
+            for (let i = 0; i < pset_count; i++)
+            {
+                // Create an input element for PSET name
+                var name = document.createElement("input");
+                name.setAttribute("type", "text");
+                name.setAttribute("name", "name");
+                name.setAttribute("placeholder", "PSET Name");
+ 
+                // Create an input element for PSET description
+                var desc = document.createElement("input");
+                desc.setAttribute("type", "text");
+                desc.setAttribute("name", "description");
+                desc.setAttribute("placeholder", "PSET Description");
+
+                // Append the PSET name input to the form
+                form.append(name);
+               
+                // Append the PSET description to the form
+                form.append(desc);
+
+                document.getElementsByTagName("body")[0].appendChild(form);
+            }
+        }
+    </script>
 {% endblock %}
