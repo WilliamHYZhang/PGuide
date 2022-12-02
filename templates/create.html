@@ -41,14 +41,14 @@
                 // Create an input element for PSET name
                 var name = document.createElement("input");
                 name.setAttribute("type", "text");
-                name.setAttribute("name", "name");
+                name.setAttribute("name", "name_"+(i+1).toString());
                 name.setAttribute("class", "form-control mx-auto w-auto");
                 name.setAttribute("placeholder", "PSET Name");
  
                 // Create an input element for PSET description
                 var desc = document.createElement("input");
                 desc.setAttribute("type", "text");
-                desc.setAttribute("name", "description");
+                desc.setAttribute("name", "description_"+(i+1).toString());
                 desc.setAttribute("class", "form-control mx-auto w-auto");
                 desc.setAttribute("placeholder", "PSET Description");
 

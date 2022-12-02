@@ -5,17 +5,17 @@
 {% endblock %}
 
 {% block main %}
+<ol>
     {% for pset in psets %}
         <ol>
-            <li> class="text-start">{{ pset["name"] }} </li>
-            <li> class="text-start">{{ pset["description"] }} </li>
-            <form action="/edit" method="post">
-                <button class="btn btn-primary" name="create" type="button" onclick="function()">Edit</button>
-                <button class="btn btn-primary" name="create" type="button" onclick="update_delete()">Delete</button> 
-            </form>
-        </ol>
+            <h3>
+                <li class="text-start">{{ pset["name"] }} </li>
+            </h3>
+            <button class="btn btn-primary" type="submit" id="edit-pset">Edit</button>
+            <button class="btn btn-primary" type="submit" id="delete-pset">Delete</button>
     {% endfor %}
-    <button class="btn btn-primary" onclick="addnew()" id="add-pset">Add PSET</button>
+</ol>
+    <button class="btn btn-primary" type="submit" id="add-pset">Add PSET</button>
 
     <script>
     let disabled = false;

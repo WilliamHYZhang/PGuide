@@ -49,5 +49,9 @@ def is_admin():
         return False
 
     user = db.execute("SELECT * FROM users WHERE id = ?", user_id)[0]
-    
+
     return user["is_admin"]
+
+def get_class_from_code(code):
+    classes = db.execute("SELECT * FROM classes WHERE code = ?", code)
+    return classes[0] if len(classes) == 1 else None

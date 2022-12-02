@@ -6,7 +6,7 @@ from flask_session import Session
 from tempfile import mkdtemp
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from helpers import apology, login_required, admin_required, is_login, is_admin
+from helpers import apology, login_required, admin_required, is_login, is_admin, get_class_from_code
 
 # Configure application
 app = Flask(__name__)
@@ -117,13 +117,9 @@ def class_():
     if not request.args.get("code"):
         return apology("Must provide class code.", 403)
 
-    # check if id is a valid class
-    classes = db.execute("SELECT * FROM classes WHERE code = ?", request.args.get("code"))
-
-    if len(classes) != 1:
+    class_ = get_class_from_code(request.args.get("code"))
+    if class_ is None:
         return apology("Invalid class code.", 403)
-
-    class_ = classes[0]
 
     # TODO: statistics
 
@@ -131,24 +127,76 @@ def class_():
 
 @login_required
 @admin_required
-@app.route("/create")
+@app.route("/create", methods=["GET", "POST"])
 def create():
-    return render_template("create.html")
+    if request.method == "GET":
+        return render_template("create.html")
+    
+    code = request.form.get("code")
+    name = request.form.get("name")
+
+    if code is None or name is None:
+        return apology("Must provide class code and name.", 403)
+
+    class_ = get_class_from_code(code)
+
+    if class_ is not None:
+        return apology("Class code already exists.", 403)
+    
+    db.execute("INSERT INTO classes (code, name) VALUES (?, ?)", code, name)
+
+    class_id = db.execute("SELECT MAX(id) FROM classes")[0]["MAX(id)"]
+
+    print(class_id)
+
+    psets = int(request.form.get("psets"))
+    
+    for i in range(psets):
+        name = request.form.get(f"name_{i+1}")
+        description = request.form.get(f"description_{i+1}")
+
+        if name is None or description is None:
+            return apology("Must provide name and description.", 403)
+        
+        db.execute("INSERT INTO psets (class_id, name, description) VALUES (?, ?, ?)", class_id, name, description)
+    
+    return redirect("/")
+
 
 
 @login_required
 @admin_required
-@app.route("/edit")
+@app.route("/edit",  methods=["GET", "POST"])
 def edit():
-    if not request.args.get("code"):
-        return apology("Must provide class code.", 403)
+    if request.method == "GET":
+        if not request.args.get("code"):
+            return apology("Must provide class code.", 403)
 
-    # check if id is a valid class
-    classes = db.execute("SELECT * FROM classes WHERE code = ?", request.args.get("code"))
+        class_ = get_class_from_code(request.args.get("code"))
+        if class_ is None:
+            return apology("Invalid class code.", 403)
 
-    if len(classes) != 1:
-        return apology("Invalid class code.", 403)
+        psets = db.execute("SELECT * FROM psets WHERE class_id = ?", class_["id"])
 
-    class_id = classes[0]["id"]
+        return render_template("edit.html", psets=psets)
+    
+    
+    edit_type = request.form.get("edit_type")
+    if edit_type is None:
+        return apology("Must include edit type.", 403)
+    
+    if edit_type == "create":
+        name = request.form.get("name")
+        description = request.form.get("description")
+        if name is None or description is None:
+            return apology("Must include name and description.")
+        
+        code = request.form.get("code")
+        if code is None:
+            return apology("Invalid class code.", 403)
+        class_ = get_class_from_code(code)
+        if class_ is None:
+            return apology("Invalid class code.", 403)
+        
 
-    return render_template("edit.html", class_ = class_)
+        db.execute("INSERT INTO psets (class_id, name, description) VALUES (?, ?, ?)", )
