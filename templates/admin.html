@@ -12,6 +12,7 @@
                 <tr>
                     <th class="text-start">Code</th>
                     <th class="text-start">Name</th>
+                    <th class="text-start">Edit</th>
                 </tr>
             </thead>
            <tbody>
@@ -19,9 +20,11 @@
                     <tr>
                         <td class="text-start">{{ class["code"] }}</td>
                         <td class="text-start">{{ class["name"] }}</td>
+                        <td class="text-start"><button class="btn btn-primary" type="submit">Edit</button></td>
                     </tr>
             {% endfor %}
             </tbody>
         </table>
+        <button class="btn btn-primary" type="submit">Edit Existing Class</button>
     </form>
 {% endblock %}
