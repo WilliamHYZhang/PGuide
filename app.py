@@ -6,7 +6,7 @@ from flask_session import Session
 from tempfile import mkdtemp
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from helpers import apology, login_required
+from helpers import apology, login_required, admin_required
 
 # Configure application
 app = Flask(__name__)
@@ -109,3 +109,11 @@ def logout():
     # Redirect user to login form
     return redirect("/")
 
+
+@app.route("/admin")
+@login_required
+@admin_required
+def admin():
+    classes = db.execute("SELECT * FROM classes")
+    print(classes)
+    return render_template("admin.html", classes=classes)
