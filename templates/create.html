@@ -7,13 +7,16 @@
 {% block main %}
     <form action="/create" method="post">
         <div class="mb-3">
-            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="name" placeholder="Class Name" type="text">
+            <h2>Class Code:</h2>
+            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="code" placeholder="Ex: CS50" type="text">
         </div>
         <div class="mb-3">
-            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="code" placeholder="Class Code" type="text">
+            <h2>Class Name:</h2>
+            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="name" placeholder="Ex: Introduction to Computer Science" type="text">
         </div>
         <div class="mb-3">
-            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="psets" placeholder="# of PSETs" type="number">
+            <h2># of PSETs:</h2>
+            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="psets" placeholder="Ex: 3" type="number">
         </div>
         <button class="btn btn-primary" type="submit" id="create-pset">Create</button>
     </form>
