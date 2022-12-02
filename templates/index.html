@@ -31,13 +31,10 @@
                 </tr>
             {% endfor %}
         </tbody>
-
-        {% if is_admin %}
-        <td class="text-start">
-            <a href="/create">
-                <button class="btn btn-primary">Create Class</button>
-            </a>
-        </td>
-        {% endif %}
     </table>
+    {% if is_admin %}
+    <a href="/create">
+        <button class="btn btn-primary">Create Class</button>
+    </a>
+    {% endif %}
 {% endblock %}

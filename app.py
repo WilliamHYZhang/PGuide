@@ -115,8 +115,8 @@ def logout():
     return redirect("/")
 
 
-@app.route("/admin")
+@app.route("/create")
 @login_required
 @admin_required
 def admin():
-    return render_template("admin.html", classes=classes)
+    return render_template("create.html")
