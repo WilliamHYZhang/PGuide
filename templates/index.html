@@ -10,16 +10,14 @@
             <tr>
                 <th class="text-start">Class Code</th>
                 <th class="text-start">Class Name</th>
-                <th class="text-start">View Stats</th>
             </tr>
         </thead>
 
         <tbody>
             {% for class in classes %}
                 <tr>
+                    <td class="text-start"><a href="/class?id={{ class.code }}">{{ class.code }}</a></td>
                     <td class="text-start">{{ class.name }}</td>
-                    <td class="text-start">{{ class.symbol }}</td>
-                    <td class="text-start"><button class="btn btn-primary" type="submit">View</button></td>
                 </tr>
             {% endfor %}
         </tbody>

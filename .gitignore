@@ -130,3 +130,6 @@ dmypy.json
 
 # flask session
 flask_session/
+
+# database
+pguide.db
