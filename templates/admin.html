@@ -7,6 +7,9 @@
 {% block main %}
     <form action="/admin" method="post">
         <button class="btn btn-primary" type="submit">Create New Class</button>
+        <h1>
+            Or
+        </h1>
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -20,7 +23,7 @@
                     <tr>
                         <td class="text-start">{{ class["code"] }}</td>
                         <td class="text-start">{{ class["name"] }}</td>
-                        <td class="text-start"><button class="btn btn-primary" type="submit">Edit</button></td>
+                        <td class="text-start"><a href="/edit">Edit</a></td>
                     </tr>
             {% endfor %}
             </tbody>
