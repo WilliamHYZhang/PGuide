@@ -169,23 +169,33 @@ def create():
 @app.route("/edit",  methods=["GET", "POST"])
 def edit():
     if request.method == "GET":
-        if not request.args.get("code"):
+        code = request.args.get("code")
+        if not code:
             return apology("Must provide class code.", 403)
 
-        class_ = get_class_from_code(request.args.get("code"))
+        class_ = get_class_from_code(code)
         if class_ is None:
             return apology("Invalid class code.", 403)
 
         psets = db.execute("SELECT * FROM psets WHERE class_id = ?", class_["id"])
+        print(psets)
 
-        return render_template("edit.html", psets=psets)
+        return render_template("edit.html", psets=psets, code=code)
     
     
-    edit_type = request.form.get("edit_type")
-    if edit_type is None:
-        return apology("Must include edit type.", 403)
+    edit_method = request.form.get("method")
+    if edit_method is None:
+        return apology("Must provide edit method.", 403)
+
+    code = request.form.get("code")
+    if code is None:
+        return apology("Must provide class code.")
+
+    class_ = get_class_from_code(code)
+    if class_ is None:
+        return apology("Invalid class code.", 403)
     
-    if edit_type == "create":
+    if edit_method == "create":
         name = request.form.get("name")
         description = request.form.get("description")
         if name is None or description is None:
@@ -194,9 +204,19 @@ def edit():
         code = request.form.get("code")
         if code is None:
             return apology("Invalid class code.", 403)
+
         class_ = get_class_from_code(code)
         if class_ is None:
             return apology("Invalid class code.", 403)
         
 
-        db.execute("INSERT INTO psets (class_id, name, description) VALUES (?, ?, ?)", )
+        db.execute("INSERT INTO psets (class_id, name, description) VALUES (?, ?, ?)", class_["id"], name, description)
+    
+    elif edit_method == "delete":
+        id = request.form.get("id")
+        if id is None:
+            return apology("Must provide PSET id.")
+        
+        db.execute("DELETE FROM psets WHERE id = ?", id)
+
+        return redirect(f"/edit?code={code}")
