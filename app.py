@@ -92,10 +92,8 @@ def login():
         if len(users) != 1 or not check_password_hash(users[0]["hash"], request.form.get("password")):
             return apology("Invalid username and/or password.", 403)
 
-        user = users[0]
-
         # Remember which user has logged in
-        session["user_id"] = user["id"]
+        session["user_id"] = users[0]["id"]
 
         # Redirect user to dashboard
         return redirect("/")
@@ -151,6 +149,6 @@ def edit():
     if len(classes) != 1:
         return apology("Invalid class code.", 403)
 
-    class_ = classes[0]
+    class_id = classes[0]["id"]
 
     return render_template("edit.html", class_ = class_)
