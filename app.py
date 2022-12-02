@@ -89,11 +89,16 @@ def login():
         if len(rows) != 1 or not check_password_hash(rows[0]["hash"], request.form.get("password")):
             return apology("Invalid username and/or password.", 403)
 
-        # Remember which user has logged in
-        session["user_id"] = rows[0]["id"]
+        user = rows[0]
 
-        # Redirect user to home page
-        return redirect("/")
+        # remember which user has logged in
+        session["user_id"] = user["id"]
+
+        # get classes
+        classes = db.execute("SELECT * FROM classes")
+
+        # Redirect user to dashboard
+        return redirect("/", classes=classes, is_admin=user["is_admin"])
 
     # User reached route via GET (as by clicking a link or via redirect)
     else:
@@ -114,6 +119,4 @@ def logout():
 @login_required
 @admin_required
 def admin():
-    classes = db.execute("SELECT * FROM classes")
-    print(classes)
     return render_template("admin.html", classes=classes)
