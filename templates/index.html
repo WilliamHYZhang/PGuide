@@ -19,7 +19,7 @@
         <tbody>
             {% for class in classes %}
                 <tr>
-                    <td class="text-start"><a href="/class?id={{ class.code }}">{{ class.code }}</a></td>
+                    <td class="text-start"><a href="/class?code={{ class.code }}">{{ class.code }}</a></td>
                     <td class="text-start">{{ class.name }}</td>
                     {% if is_admin %}
                         <td class="text-start">

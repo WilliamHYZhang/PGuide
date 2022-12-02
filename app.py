@@ -86,15 +86,15 @@ def login():
             return apology("Must provide password.", 403)
 
         # Query database for username
-        rows = db.execute("SELECT * FROM users WHERE username = ?", request.form.get("username"))
+        users = db.execute("SELECT * FROM users WHERE username = ?", request.form.get("username"))
 
         # Ensure username exists and password is correct
-        if len(rows) != 1 or not check_password_hash(rows[0]["hash"], request.form.get("password")):
+        if len(users) != 1 or not check_password_hash(users[0]["hash"], request.form.get("password")):
             return apology("Invalid username and/or password.", 403)
 
-        user = rows[0]
+        user = users[0]
 
-        # remember which user has logged in
+        # Remember which user has logged in
         session["user_id"] = user["id"]
 
         # Redirect user to dashboard
@@ -114,9 +114,43 @@ def logout():
     # Redirect user to login form
     return redirect("/")
 
+@app.route("/class")
+def class_():
+    if not request.args.get("code"):
+        return apology("Must provide class code.", 403)
 
-@app.route("/create")
+    # check if id is a valid class
+    classes = db.execute("SELECT * FROM classes WHERE code = ?", request.args.get("code"))
+
+    if len(classes) != 1:
+        return apology("Invalid class code.", 403)
+
+    class_ = classes[0]
+
+    # TODO: statistics
+
+    return render_template("class.html", class_ = class_)
+
 @login_required
 @admin_required
-def admin():
+@app.route("/create")
+def create():
     return render_template("create.html")
+
+
+@login_required
+@admin_required
+@app.route("/edit")
+def edit():
+    if not request.args.get("code"):
+        return apology("Must provide class code.", 403)
+
+    # check if id is a valid class
+    classes = db.execute("SELECT * FROM classes WHERE code = ?", request.args.get("code"))
+
+    if len(classes) != 1:
+        return apology("Invalid class code.", 403)
+
+    class_ = classes[0]
+
+    return render_template("edit.html", class_ = class_)
