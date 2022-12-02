@@ -145,7 +145,8 @@ def create():
     
     db.execute("INSERT INTO classes (code, name) VALUES (?, ?)", code, name)
 
-    class_id = db.execute("SELECT MAX(id) FROM classes")["MAX(id)"]
+    class_id = db.execute("SELECT MAX(id) FROM classes")[0]["MAX(id)"]
+
     print(class_id)
 
     psets = int(request.form.get("psets"))
@@ -157,7 +158,7 @@ def create():
         if name is None or description is None:
             return apology("Must provide name and description.", 403)
         
-        db.execute("INSERT INTO psets (class_id, name, description), VALUES (?, ?, ?)", class_id, name, description)
+        db.execute("INSERT INTO psets (class_id, name, description) VALUES (?, ?, ?)", class_id, name, description)
     
     return redirect("/")
 
