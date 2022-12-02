@@ -10,10 +10,62 @@
             <li> class="text-start">{{ pset["name"] }} </li>
             <li> class="text-start">{{ pset["description"] }} </li>
             <form action="/edit" method="post">
-                <button class="btn btn-primary" type="submit" id="edit-pset">Edit</button>
-                <button class="btn btn-primary" type="submit" id="delete-pset">Delete</button>
+                <button class="btn btn-primary" name="create" type="button" onclick="function()">Edit</button>
+                <button class="btn btn-primary" name="create" type="button" onclick="update_delete()">Delete</button> 
             </form>
         </ol>
     {% endfor %}
-    <button class="btn btn-primary" type="submit" id="add-pset">Add PSET</button>
+    <button class="btn btn-primary" onclick="addnew()" id="add-pset">Add PSET</button>
+
+    <script>
+    let disabled = false;
+        function update(){
+            if (disabled) return;
+            disabled = true;
+
+            // Create a form dynamically
+            var form = document.createElement("form");
+            form.setAttribute("method", "post");
+            form.setAttribute("action", "submit.php");
+
+            var br = document.createElement("br");
+            form.append(br);
+
+                // Append line break
+                var br = document.createElement("br");
+                form.append(br);
+
+                // Create an input element for PSET name
+                var name = document.createElement("input");
+                name.setAttribute("type", "text");
+                name.setAttribute("name", "name");
+                name.setAttribute("class", "form-control mx-auto w-auto");
+                name.setAttribute("placeholder", "PSET Name");
+ 
+                // Create an input element for PSET description
+                var desc = document.createElement("input");
+                desc.setAttribute("type", "text");
+                desc.setAttribute("name", "description");
+                desc.setAttribute("class", "form-control mx-auto w-auto");
+                desc.setAttribute("placeholder", "PSET Description");
+
+                // Append the PSET name input to the form
+                form.append(name);
+               
+                // Append the PSET description to the form
+                form.append(desc);
+            }
+            // Append line break
+            var br = document.createElement("br");
+            form.append(br)
+
+            // Create a submit button
+            var s = document.createElement("input");
+            s.setAttribute("class", "btn btn-primary");
+            s.setAttribute("type", "submit");
+            s.setAttribute("value", "Submit");
+
+            // Append the submit button to the form
+            form.append(s);
+    </script>
 {% endblock %}
