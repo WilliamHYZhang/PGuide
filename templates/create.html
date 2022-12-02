@@ -15,8 +15,9 @@
         <div class="mb-3">
             <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="psets" id="psets" placeholder="# of PSETs" type="number">
         </div>
-        <button class="btn btn-primary" type="button" onclick="update()">Create</button>
+        <button class="btn btn-primary" name="create" type="button" onclick="update()">Create</button>
         <p></p>
+        <h3></h3>
         <button class="btn btn-primary" type="submit">Submit</button>     
     </form>
 
@@ -45,13 +46,15 @@
                 desc.setAttribute("name", "description");
                 desc.setAttribute("placeholder", "PSET Description");
 
+                form.append("PSET", i+1)
+
                 // Append the PSET name input to the form
                 form.append(name);
                
                 // Append the PSET description to the form
                 form.append(desc);
 
-                document.getElementsByTagName("body")[0].appendChild(form);
+                document.getElementsByTagName("h3")[0].appendChild(form);
             }
         }
     </script>
