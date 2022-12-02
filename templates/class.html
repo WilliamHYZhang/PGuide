@@ -7,7 +7,7 @@
 {% block main %}
 <form action="/login" method="post">
     <select class="form-select" aria-label="PSETs">
-        <option selected>PSETs</option>
+        <option selected>Choose a PSET</option>
         {% for pset in psets %}
             <option value="{{ pset.id }}">{{ pset["name"] }}</option>
         {% endfor %}
