@@ -5,5 +5,13 @@
 {% endblock %}
 
 {% block main %}
-    
+<form action="/login" method="post">
+    <select class="form-select" aria-label="PSETs">
+        <option selected>PSETs</option>
+        {{% for pset in psets %}}
+            <option value="{{ pset['id'] }}">{{ pset["name"] }}</option>
+        {{% endfor %}}
+      </select>
+    <button class="btn btn-primary" type="submit" id="add-feedback">Add Feedback</button>
+</form>
 {% endblock %}
