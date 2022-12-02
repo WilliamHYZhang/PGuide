@@ -123,7 +123,9 @@ def class_():
 
     # TODO: statistics
 
-    return render_template("class.html", class_ = class_, is_login=is_login())
+    psets = db.execute("SELECT * FROM psets WHERE class_id = ?", class_["id"])
+
+    return render_template("class.html", class_ = class_, psets=psets, is_login=is_login())
 
 @login_required
 @admin_required
@@ -178,7 +180,6 @@ def edit():
             return apology("Invalid class code.", 403)
 
         psets = db.execute("SELECT * FROM psets WHERE class_id = ?", class_["id"])
-        print(psets)
 
         return render_template("edit.html", psets=psets, code=code)
     
