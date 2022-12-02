@@ -1,8 +1,8 @@
-from flask import Flask
+from flask import Flask, flash, redirect, render_template, request, session
 
 app = Flask(__name__)
 
 @app.route("/")
 def hello_world():
-    return "<p>Hello world</p>"
+    return render_template("admin.html")
 
