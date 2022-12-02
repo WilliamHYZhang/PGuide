@@ -1,15 +1,18 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    User Dashboard
+    Dashboard
 {% endblock %}
 
 {% block main %}
-    <table class="table">
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th class="text-start">Class Code</th>
                 <th class="text-start">Class Name</th>
+                {% if is_admin %}
+                    <th class="text-start">Edit</th>
+                {% endif %}
             </tr>
         </thead>
 
@@ -18,8 +21,20 @@
                 <tr>
                     <td class="text-start"><a href="/class?id={{ class.code }}">{{ class.code }}</a></td>
                     <td class="text-start">{{ class.name }}</td>
+                    {% if is_admin %}
+                        <td class="text-start">
+                            <a href="/edit">
+                                <button class="btn btn-primary">Edit</button>
+                            </a>
+                        </td>
+                    {% endif %}
                 </tr>
             {% endfor %}
         </tbody>
     </table>
+    {% if is_admin %}
+    <a href="/create">
+        <button class="btn btn-primary">Create Class</button>
+    </a>
+    {% endif %}
 {% endblock %}
