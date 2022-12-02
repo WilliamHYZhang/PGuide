@@ -196,6 +196,7 @@ def edit():
         return apology("Invalid class code.", 403)
     
     if edit_method == "create":
+        print(request.form)
         name = request.form.get("name")
         description = request.form.get("description")
         if name is None or description is None:
@@ -219,4 +220,4 @@ def edit():
         
         db.execute("DELETE FROM psets WHERE id = ?", id)
 
-        return redirect(f"/edit?code={code}")
+    return redirect(f"/edit?code={code}")
