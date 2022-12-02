@@ -5,11 +5,11 @@
 {% endblock %}
 
 {% block main %}
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th class="text-start">PSET Name</th>
-                    <th class="text-start">Change</th>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th class="text-start">PSET Name</th>
+                <th class="text-start">Change</th>
             </tr>
         </thead>
 
@@ -25,13 +25,7 @@
             {% endfor %}
         </tbody>
     </table>
-            <h3>
-                <li class="text-start">{{ pset["name"] }} </li>
-            </h3>
-            <button class="btn btn-primary" type="submit" id="edit-pset">Edit</button>
-            <button class="btn btn-primary" type="submit" id="delete-pset">Delete</button>
-    {% endfor %}
-</ol>
+    
     <button class="btn btn-primary" type="submit" id="add-pset">Add PSET</button>
 
     <script>
