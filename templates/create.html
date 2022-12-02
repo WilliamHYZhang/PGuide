@@ -13,19 +13,19 @@
             <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="name" placeholder="Class Name" type="text">
         </div>
         <div class="mb-3">
-            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="psets" placeholder="# of PSETs" type="number">
+            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="psets" id="psets" placeholder="# of PSETs" type="number">
         </div>
         <button class="btn btn-primary" type="button" onclick="update()">Create</button>
-        <p id="psets_down"></p>
+        <p></p>
         <button class="btn btn-primary" type="submit">Submit</button>     
     </form>
 
     <script>
-        var down = document.getElementById("psets_down");
         function update(){
+            console.log("called")
             // Get number of psets
-            let pset_count = document.getElementById("psets");
-
+            let pset_count = document.querySelector("#psets").valueAsNumber;
+            console.log("the pset count is", pset_count)
             // Create a form dynamically
             var form = document.createElement("form");
             form.setAttribute("method", "post");
