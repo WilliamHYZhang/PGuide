@@ -5,9 +5,26 @@
 {% endblock %}
 
 {% block main %}
-<ol>
-    {% for pset in psets %}
-        <ol>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th class="text-start">PSET Name</th>
+                    <th class="text-start">Change</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for pset in psets %}
+                <tr>
+                    <td class="text-start">{{ pset.name }}</td>
+                    <td>
+                        <button class="btn btn-primary">Edit</button>
+                        <button class="btn btn-primary">Delete</button>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
             <h3>
                 <li class="text-start">{{ pset["name"] }} </li>
             </h3>
