@@ -6,7 +6,7 @@ from flask_session import Session
 from tempfile import mkdtemp
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from helpers import apology, login_required, admin_required
+from helpers import apology, login_required, admin_required, is_login, is_admin
 
 # Configure application
 app = Flask(__name__)
@@ -29,7 +29,10 @@ def after_request(response):
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    # get classes
+    classes = db.execute("SELECT * FROM classes")
+
+    return render_template("index.html", classes=classes, is_admin=is_admin())
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
@@ -94,11 +97,8 @@ def login():
         # remember which user has logged in
         session["user_id"] = user["id"]
 
-        # get classes
-        classes = db.execute("SELECT * FROM classes")
-
         # Redirect user to dashboard
-        return redirect("/", classes=classes, is_admin=user["is_admin"])
+        return redirect("/")
 
     # User reached route via GET (as by clicking a link or via redirect)
     else:
