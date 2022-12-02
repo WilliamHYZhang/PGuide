@@ -123,7 +123,7 @@ def class_():
 
     # TODO: statistics
 
-    return render_template("class.html", class_ = class_)
+    return render_template("class.html", class_ = class_, is_login=is_login())
 
 @login_required
 @admin_required
