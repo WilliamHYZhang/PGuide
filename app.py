@@ -127,17 +127,45 @@ def class_():
 
 @login_required
 @admin_required
-@app.route("/create")
+@app.route("/create", methods=["GET", "POST"])
 def create():
     if request.method == "GET":
         return render_template("create.html")
     
-    print(request.form.items())
+    code = request.form.get("code")
+    name = request.form.get("name")
+
+    if code is None or name is None:
+        return apology("Must provide class code and name.", 403)
+
+    class_ = get_class_from_code(code)
+
+    if class_ is not None:
+        return apology("Class code already exists.", 403)
+    
+    db.execute("INSERT INTO classes (code, name) VALUES (?, ?)", code, name)
+
+    class_id = db.execute("SELECT MAX(id) FROM classes")["MAX(id)"]
+    print(class_id)
+
+    psets = int(request.form.get("psets"))
+    
+    for i in range(psets):
+        name = request.form.get(f"name_{i+1}")
+        description = request.form.get(f"description_{i+1}")
+
+        if name is None or description is None:
+            return apology("Must provide name and description.", 403)
+        
+        db.execute("INSERT INTO psets (class_id, name, description), VALUES (?, ?, ?)", class_id, name, description)
+    
+    return redirect("/")
+
 
 
 @login_required
 @admin_required
-@app.route("/edit")
+@app.route("/edit",  methods=["GET", "POST"])
 def edit():
     if request.method == "GET":
         if not request.args.get("code"):
