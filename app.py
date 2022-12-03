@@ -153,8 +153,6 @@ def create():
 
     class_id = db.execute("SELECT MAX(id) FROM classes")[0]["MAX(id)"]
 
-    print(class_id)
-
     psets = int(request.form.get("psets"))
     
     for i in range(psets):
@@ -201,7 +199,6 @@ def edit():
         return apology("Invalid class code.", 403)
     
     if edit_method == "create":
-        print(request.form)
         name = request.form.get("name")
         description = request.form.get("description")
         if name is None or description is None:
