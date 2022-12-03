@@ -1,9 +1,14 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    {{ class_["code"] }}: {{ class_["name"]}}
+    {{ class_["code"] }}
 {% endblock %}
 
 {% block main %}
-    
+    rating, hours, difficulty, enjoyment, comments
+
+
+    <a href="/edit?code={{ class.code }}">
+        <button class="btn btn-primary">Edit</button>
+    </a>
 {% endblock %}

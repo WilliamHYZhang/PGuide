@@ -6,6 +6,10 @@ from flask_session import Session
 from tempfile import mkdtemp
 from werkzeug.security import check_password_hash, generate_password_hash
 
+import numpy as np
+import pandas as pd
+import plotly.express as px
+
 from helpers import apology, login_required, admin_required, is_login, is_admin, get_class_from_code
 
 # Configure application
@@ -123,6 +127,17 @@ def class_():
 
     # TODO: statistics
 
+    # statistics for overall class (all psets)
+    stats = db.execute("SELECT * FROM feedback WHERE class_id = ?", )
+    df = pd.DataFrame(stats)
+    averages_df = df[["rating", "hours", "difficulty", "enjoyment"]].mean()
+
+    # average rating
+    fig = px.bar(df, x='pset_id', y='rating')
+    fig.show()
+
+
+
     return render_template("class.html", class_ = class_)
 
 @login_required
@@ -200,3 +215,22 @@ def edit():
         
 
         db.execute("INSERT INTO psets (class_id, name, description) VALUES (?, ?, ?)", )
+
+@login_required
+@app.route("/feedback",  methods=["GET", "POST"])
+def feedback():
+    if request.method == "GET":
+        pset_id = request.args.get("pset_id")
+        return render_template("feedback.html" pset_id=pset_id)
+
+    else:
+        rating = request.form.get("rating")
+        hours = request.form.get("hours")
+        difficulty = request.form.get("difficulty")
+        enjoyment = request.form.get("enjoyment")
+        comments = request.form.get("comments")
+        pset_id = request.form.get("pset_id")
+
+
+
+        return render_template("feedback.html", psets=psets)
