@@ -257,3 +257,11 @@ def feedback():
     
     # TODO: get form input
     # TODO: add feedback to database (make sure to overwrite existing feedback if a user resubmits for same PSET)
+        rating = request.form.get("rating")
+        difficulty = request.form.get("difficulty")
+        enjoyment = request.form.get("enjoyment")
+        hours = request.form.get("hours")
+        comments = request.form.get("comments")
+
+        if rating is None or difficulty is None or enjoyment is None or hours is None or comments is None:
+            return apology("Must complete all fields.", 403)
