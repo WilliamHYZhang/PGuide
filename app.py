@@ -253,10 +253,6 @@ def feedback():
         
         pset = psets[0]
 
-        return render_template("feedback.html", pset=pset)
-    
-    # TODO: get form input
-    # TODO: add feedback to database (make sure to overwrite existing feedback if a user resubmits for same PSET)
         rating = request.form.get("rating")
         difficulty = request.form.get("difficulty")
         enjoyment = request.form.get("enjoyment")
@@ -265,3 +261,9 @@ def feedback():
 
         if rating is None or difficulty is None or enjoyment is None or hours is None or comments is None:
             return apology("Must complete all fields.", 403)
+        
+        db.execute("INSERT INTO feedback (rating, hours_spent, difficulty, enjoyment, comments) VALUES (?, ?, ?, ?, ?)", rating, hours, difficulty, enjoyment, comments)
+
+        return render_template("feedback.html", pset=pset)
+
+    # TODO: add feedback to database (make sure to overwrite existing feedback if a user resubmits for same PSET)
