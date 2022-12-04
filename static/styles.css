@@ -10,7 +10,9 @@ nav .navbar-brand .red
     color: #A41034;
 }
 
-.btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
+/* Colors for buttons */
+.btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited 
+{
     background-color: #A41034 !important;
     border: #A41034 !important;
 }
