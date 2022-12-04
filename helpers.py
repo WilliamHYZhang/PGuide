@@ -17,6 +17,7 @@ def login_required(f):
     """
     @wraps(f)
     def decorated_function(*args, **kwargs):
+        print('called')
         if session.get("user_id") is None:
             return redirect("/login")
         return f(*args, **kwargs)
@@ -55,3 +56,7 @@ def is_admin():
 def get_class_from_code(code):
     classes = db.execute("SELECT * FROM classes WHERE code = ?", code)
     return classes[0] if len(classes) == 1 else None
+
+def get_pset_from_id(id):
+    psets = db.execute("SELECT * FROM psets WHERE id = ?", id)
+    return psets[0] if len(psets) == 1 else None

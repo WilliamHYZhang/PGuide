@@ -10,7 +10,7 @@ import numpy as np
 import pandas as pd
 import plotly.express as px
 
-from helpers import apology, login_required, admin_required, is_login, is_admin, get_class_from_code
+from helpers import apology, login_required, admin_required, is_login, is_admin, get_class_from_code, get_pset_from_id
 
 # Configure application
 app = Flask(__name__)
@@ -131,9 +131,9 @@ def class_():
 
     return render_template("class.html", class_ = class_, psets=psets, is_login=is_login())
 
+@app.route("/create", methods=["GET", "POST"])
 @login_required
 @admin_required
-@app.route("/create", methods=["GET", "POST"])
 def create():
     if request.method == "GET":
         return render_template("create.html")
@@ -168,9 +168,9 @@ def create():
 
 
 
+@app.route("/edit",  methods=["GET", "POST"])
 @login_required
 @admin_required
-@app.route("/edit",  methods=["GET", "POST"])
 def edit():
     if request.method == "GET":
         code = request.args.get("code")
@@ -238,32 +238,45 @@ def edit():
         apology("Invalid ")
     return redirect(f"/edit?code={code}")
 
-@login_required
 @app.route("/feedback", methods=["GET", "POST"])
+@login_required
 def feedback():
     if request.method == "GET":
         id = request.args.get("id")
         if not id:
             return apology("Must provide PSET id.", 403)
 
-        psets = db.execute("SELECT * FROM psets WHERE id = ?", id)
-
-        if len(psets) == 0:
+        pset = get_pset_from_id(id)
+        if pset is None:
             return apology("Invalid PSET id.", 403)
         
-        pset = psets[0]
-
+        return render_template("feedback.html", pset=pset)
+        
+    if request.method == "POST":
+        id = request.form.get("id")
         rating = request.form.get("rating")
         difficulty = request.form.get("difficulty")
         enjoyment = request.form.get("enjoyment")
         hours = request.form.get("hours")
         comments = request.form.get("comments")
 
-        if rating is None or difficulty is None or enjoyment is None or hours is None or comments is None:
-            return apology("Must complete all fields.", 403)
+        if None in [id, rating, difficulty, enjoyment, hours, comments]:
+            return apology("Must provide all necessary fields.", 403)
+     
+        pset = get_pset_from_id(id)
+        if pset is None:
+            return apology("Invalid PSET id.", 403)
         
-        db.execute("INSERT INTO feedback (rating, hours_spent, difficulty, enjoyment, comments) VALUES (?, ?, ?, ?, ?)", rating, hours, difficulty, enjoyment, comments)
+        print(session)
 
-        return render_template("feedback.html", pset=pset)
+        current_feedback = db.execute("SELECT id FROM feedback WHERE user_id = ? AND pset_id = ?", session["user_id"], pset["id"])
 
-    # TODO: add feedback to database (make sure to overwrite existing feedback if a user resubmits for same PSET)
+        if len(current_feedback) == 0:
+            db.execute("INSERT INTO feedback (user_id, pset_id, rating, hours_spent, difficulty, enjoyment, comments) VALUES (?, ?, ?, ?, ?, ?, ?)", session["user_id"], id, rating, hours, difficulty, enjoyment, comments)
+        else:
+            db.execute("UPDATE feedback SET rating = ?, hours_spent = ?, difficulty = ?, enjoyment = ?, comments = ? WHERE user_id = ? AND pset_id = ?", rating, hours, difficulty, enjoyment, comments, session["user_id"], id)
+
+        class_id = pset["class_id"]
+        class_code = db.execute("SELECT code FROM classes WHERE id = ?", class_id)[0]["code"]
+
+        return redirect(f"/class?code={class_code}")
