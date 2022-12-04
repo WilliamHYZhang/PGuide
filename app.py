@@ -192,7 +192,7 @@ def edit():
 
     code = request.form.get("code")
     if code is None:
-        return apology("Must provide class c ode.")
+        return apology("Must provide class code.")
 
     class_ = get_class_from_code(code)
     if class_ is None:
@@ -237,3 +237,23 @@ def edit():
     else:
         apology("Invalid ")
     return redirect(f"/edit?code={code}")
+
+@login_required
+@app.route("/feedback", methods=["GET", "POST"])
+def feedback():
+    if request.method == "GET":
+        id = request.args.get("id")
+        if not id:
+            return apology("Must provide PSET id.", 403)
+
+        psets = db.execute("SELECT * FROM psets WHERE id = ?", id)
+
+        if len(psets) == 0:
+            return apology("Invalid PSET id.", 403)
+        
+        pset = psets[0]
+
+        return render_template("feedback.html", pset=pset)
+    
+    # TODO: get form input
+    # TODO: add feedback to database (make sure to overwrite existing feedback if a user resubmits for same PSET)

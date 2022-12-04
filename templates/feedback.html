@@ -5,31 +5,27 @@
 {% endblock %}
 
 {% block main %}
-    {% for pset in psets %}
-        <h1> 
-            class="text-start">{{ pset["name"] }}
-        </h1>
-        <form action="/feedback" method="post">
-            <div>
-                Overall Rating (from worst (1) to best (10)):
-                <input type="range">
-            </div>
-            <div class="mb-3">
-                <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="hours" name="hours" placeholder="Hours spent" type="number">
-            </div>
-            <div>
-                Difficulty (from easiest (1) to hardest (10)):
-                <input type="range">
-            </div>
-            <div>
-                Enjoyment (from least (1) to most (10) enjoyable):
-                <input type="range">
-            </div>
-            <div class="mb-3">
-                <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="comments" name="comments" placeholder="Comments" type="text">
-            </div>
-        </form>
-
-    {% endfor %}
-
+    <h1> 
+        <class="text-start">{{ pset.name }}
+    </h1>
+    <form action="/feedback" method="post">
+        <div>
+            Overall Rating (from worst (1) to best (10)):
+            <input type="range" name="rating">
+        </div>
+        <div class="mb-3">
+            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="hours" name="hours" placeholder="Hours spent" type="number">
+        </div>
+        <div>
+            Difficulty (from easiest (1) to hardest (10)):
+            <input type="range" name="difficulty">
+        </div>
+        <div>
+            Enjoyment (from least (1) to most (10) enjoyable):
+            <input type="range" name="enjoyment">
+        </div>
+        <div class="mb-3">
+            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="comments" name="comments" placeholder="Comments" type="text">
+        </div>
+    </form>
 {% endblock %}

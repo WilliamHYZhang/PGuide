@@ -5,13 +5,14 @@
 {% endblock %}
 
 {% block main %}
-<form action="/login" method="post">
-    <select class="form-select" aria-label="PSETs">
-        <option selected>Choose a PSET</option>
+<div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown">
+        Add Feedback for PSET
+    </button>
+    <div class="dropdown-menu">
         {% for pset in psets %}
-            <option value="{{ pset.id }}">{{ pset["name"] }}</option>
+        <a class="dropdown-item" href="/feedback?id={{ pset.id }}">{{ pset.name }}</a>
         {% endfor %}
-      </select>
-    <button class="btn btn-primary" type="submit" id="add-feedback">Add Feedback</button>
-</form>
+    </div>
+</div>
 {% endblock %}
