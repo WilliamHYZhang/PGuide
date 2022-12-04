@@ -192,7 +192,7 @@ def edit():
 
     code = request.form.get("code")
     if code is None:
-        return apology("Must provide class code.")
+        return apology("Must provide class c ode.")
 
     class_ = get_class_from_code(code)
     if class_ is None:
@@ -202,7 +202,7 @@ def edit():
         name = request.form.get("name")
         description = request.form.get("description")
         if name is None or description is None:
-            return apology("Must include name and description.")
+            return apology("Must provide name and description.")
         
         code = request.form.get("code")
         if code is None:
@@ -221,5 +221,19 @@ def edit():
             return apology("Must provide PSET id.")
         
         db.execute("DELETE FROM psets WHERE id = ?", id)
+    
+    elif edit_method == "update":
+        name = request.form.get("name")
+        description = request.form.get("description")
+        if name is None or description is None:
+            return apology("Must provide name and description.")
 
+        id = request.form.get("id")
+        if id is None:
+            return apology("Must provide PSET id.")
+        
+        db.execute("UPDATE psets SET name = ?, description = ? WHERE id = ?", name, description, id)
+    
+    else:
+        apology("Invalid ")
     return redirect(f"/edit?code={code}")
