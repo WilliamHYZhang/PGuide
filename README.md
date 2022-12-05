@@ -1,6 +1,11 @@
 # PGuide Description
 A web application that allows users to view and provide feedback on specific psets for their classes.
 
+# Background
+Harvard currently has a QGuide, which allows students to view and provide feedback for courses that they have taken. However, no such resource exists for PSETs. Students might want to know which PSETs will be harder and take longer to plan out their weeks. It may be helpful to read feedback from other students, like if TFs were helpful. All of this can be accomplished with a PGuide, or a QGuide for PSETs.
+
+Anyone will be able to view feedback for PSETs for classes. Users must log in to give feedback. Admins can create the classes and the PSETs that users will use.
+
 # Installation
 ```
 pip install -r requirements.txt
@@ -45,6 +50,8 @@ At the bottom of the page, there is an add feedback button that will prompt a dr
 Clicking on add feedback on the class page, while looged in, will take you to the feedback page. This page displays a form that asks for overall rating, difficulty, enjoyment, hours spent, and comments. Sliders that increment by 1 on a scale of 1-10 are used from overall rating, difficulty, and enjoyment. The value of the slider is displayed on the right of the slider so the user will know what value they are submitting. Hours spent has an input box to type a number or buttons that allow the user to increment to the number they want to submit. Comments is an input box that takes in anything. If there is not all fields are completed, there will be an error. If rating, difficulty, enjoyment, and hours spent are not integer values, there will be an error.
 
 Clicking add feedback will submit the feedback and redirect the user to the class page, where the statistics will be updated with the new feedback.
+
+If a user submits another feedback for a PSET that they have already submitted feedback for, the new feedback will replace the previous feedback.
 
 # For admin
 Log in for admin access on the log in page, which can be reached from the navigation bar on the homepage.
