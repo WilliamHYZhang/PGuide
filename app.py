@@ -292,6 +292,10 @@ def feedback():
         if None in [id, rating, difficulty, enjoyment, hours, comments]:
             return apology("Must provide all necessary fields.", 403)
 
+        #TODO: Must be int for rating, difficulty, enjoyment, hours
+        #if ...
+        #    return apology("Must provide integer value.", 403)
+
         # get pset
         pset = get_pset_from_id(id)
         if pset is None:
