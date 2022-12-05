@@ -5,6 +5,7 @@
 {% endblock %}
 
 {% block main %}
+    <!-- Form that asks for users to input class code, class name, and # of psets -->
     <form action="/create" method="post">
         <div class="mb-3">
             <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="code" id="code" placeholder="Class Code" type="text">
@@ -18,6 +19,7 @@
         <button class="btn btn-primary" name="create" type="button" onclick="update()">Create</button>  
     </form>
 
+    <!-- Once the create button is clicked, based on the # of PSETs from user input, create new forms for each PSET -->
     <script>
         let disabled = false;
         function update(){
@@ -31,6 +33,8 @@
 
             var br = document.createElement("br");
             form.append(br);
+
+            // Form for each PSET asks for PSET name and description
 
             for (let i = 0; i < pset_count; i++)
             {

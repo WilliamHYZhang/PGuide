@@ -6,9 +6,11 @@
 
 {% block main %}
 <div class="dropdown">
+    <!-- Add feedback button that will prompt a dropdown selection -->
     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown">
         Add Feedback for PSET
     </button>
+    <!-- Dropdown selection to choose a pset -->
     <div class="dropdown-menu">
         {% for pset in psets %}
         <a class="dropdown-item" href="/feedback?id={{ pset.id }}">{{ pset.name }}</a>

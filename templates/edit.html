@@ -6,6 +6,7 @@
 
 {% block main %}
     <table class="table">
+        <!-- Table labels PSET name, PSET description, and change as columns -->
         <thead>
             <tr>
                 <th class="text-start">PSET Name</th>
@@ -14,6 +15,7 @@
             </tr>
         </thead>
 
+        <!-- For each PSET, the name, description, and an update and delete button are shown on the table-->
         <tbody>
             {% for pset in psets %}
                 <tr>
@@ -63,6 +65,8 @@
         </tbody>
     </table>
     
+
+    <!-- Form to add a PSET asks for the new PSET name and description -->
     <form action="/edit" method="POST">
         <input type="hidden" name="method" value="create" />
         <input type="hidden" name="code" value="{{ code }}" />
@@ -76,7 +80,8 @@
                 </div>
             </div>
         </div>
-
+    
+        <!-- Add PSET button submits the form -->
         <button class="btn btn-primary" type="submit">Add PSET</button>
     </form>
 

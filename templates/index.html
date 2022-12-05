@@ -6,21 +6,25 @@
 
 {% block main %}
     <table class="table">
+        <!-- Table labels class code and class name as columns for all users -->
         <thead>
             <tr>
                 <th class="text-start">Class Code</th>
                 <th class="text-start">Class Name</th>
+                <!-- Users that have admin status will see an edit column -->
                 {% if is_admin %}
                     <th class="text-start">Edit</th>
                 {% endif %}
             </tr>
         </thead>
 
+        <!-- For each class, the code and name are shown on the table-->
         <tbody>
             {% for class in classes %}
                 <tr>
                     <td class="text-start"><a href="/class?code={{ class.code }}">{{ class.code }}</a></td>
                     <td class="text-start">{{ class.name }}</td>
+                    <!-- For each class, an edit button is also shown on the table for admin-->
                     {% if is_admin %}
                         <td class="text-start">
                             <a href="/edit?code={{ class.code }}">
@@ -32,6 +36,7 @@
             {% endfor %}
         </tbody>
     </table>
+    <!-- Admin have access to a create new class button -->
     {% if is_admin %}
     <a href="/create">
         <button class="btn btn-primary">Create Class</button>

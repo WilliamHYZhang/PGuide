@@ -9,35 +9,47 @@
         <class="text-start">{{ pset.name }}
     </h1>
     
+    <!-- Feedback form asks for overall rating, difficulty, enjoyment, hours spent, and comments -->
     <form action="/feedback" method="post">
         <input type="hidden" name="id" value="{{ pset.id }}" />  
-        <!-- From https://www.w3schools.com/howto/howto_js_rangeslider.asp -->
+        <!-- Range sliders from https://www.w3schools.com/howto/howto_js_rangeslider.asp -->
+        <!-- Range sliders used for overall rating, difficulty, and enjoyment -->
+
+        <!-- Overall rating -->
         <div>
             <label for="rating" class="form-label">Overall Rating: </label>
             <input type="range" min="1" max="10" class="slider" id="rating" name="rating">
             <span id="value1"></span>
         </div>
+        <!-- Difficulty -->
         <div>
             <label for="difficulty" class="form-label">Difficulty: </label>
             <input type="range" min="1" max="10" class="slider" id="difficulty" name="difficulty">
             <span id="value2"></span>
         </div>
+        <!-- Enjoyment -->
         <div>
             <label for="enjoyment" class="form-label">Enjoyment: </label>
             <input type="range" min="1" max="10" class="slider" id="enjoyment" name="enjoyment">
             <span id="value3"></span>
         </div>
+        <!-- Hours spent -->
         <div class="mb-3">
             <label for="difficulty" class="form-label">Hours Spent:</label>
             <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="hours" name="hours" placeholder="10" type="number">
         </div>
+        <!-- Comments (text input) -->
         <div class="mb-3">
             <label for="difficulty" class="form-label">Comments:</label>
             <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="comments" name="comments" placeholder="Optional" type="text">
         </div>
+        <!-- Submit button submits the feedback-->
         <button class="btn btn-primary" name="submit" type="submit">Submit</button>  
         
-        <script> // From https://www.w3schools.com/howto/howto_js_rangeslider.asp
+
+        <!-- From https://www.w3schools.com/howto/howto_js_rangeslider.asp -->
+        <!-- To display current value for range sliders for users to know what they are submitting -->
+        <script> 
             // For the overall rating slider
 
             var slider1 = document.getElementById("rating");
