@@ -1,6 +1,18 @@
 # PGuide Description
 A web application that allows users to view and provide feedback on specific psets for their classes.
 
+# Installation
+```
+pip install -r requirements.txt
+```
+
+We use `sqlite3` for our backend database.
+
+# Usage
+```
+flask run
+```
+
 # For all users
 
 # Homepage
@@ -24,15 +36,3 @@ After logging in, the user will be returned to the home page.
 
 # For admin
 
-# Installation
-
-```
-pip install -r requirements.txt
-```
-
-We use `sqlite3` for our backend database.
-
-# Usage
-```
-flask run
-```
