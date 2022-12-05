@@ -7,16 +7,38 @@ Harvard currently has a QGuide, which allows students to view and provide feedba
 Anyone will be able to view feedback for PSETs for classes. Users must log in to give feedback. Admins can create the classes and the PSETs that users will use.
 
 # Installation
-```
+Execute cd in VS Code.
+
+Next execute
+wget ...
+in order to download a ZIP called pguide.zip into VS Code.
+
+Then execute
+unzip pguide.zip
+to create a folder called pguide. 
+
+You no longer need the ZIP file, so you can execute
+rm pguide.zip
+and respond with “y” followed by Enter at the prompt to remove the ZIP file you downloaded.
+
+Now type
+cd pguide
+followed by Enter to move yourself into (i.e., open) that directory. Your prompt should now resemble the below.
+
+pguide/ $
+Execute ls by itself, and you should see a few files and folders:
+
+app.py  DESIGN.md  helpers.py  README.md pguide.db requirements.txt  schema.sql static/  templates/
+
+Also, install the required programs by running
 pip install -r requirements.txt
-```
 
 We use `sqlite3` for our backend database.
 
 # Usage
-```
+
+To view the website, run
 flask run
-```
 
 # For all users
 
