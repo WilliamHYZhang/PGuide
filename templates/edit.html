@@ -86,17 +86,19 @@
     </form>
 
     <script>
+        // get update buttons
         let updateButtons = document.getElementsByClassName("update");
 
+        // handle update by revealing the corresponding update form
         function handleUpdate(event) {
             let target = event.target;
             let classes = target.className.split(' ');
             let psetClass = classes[classes.length - 1];
             let updateForm = document.getElementsByClassName("form-" + psetClass)[0];
-            console.log(updateForm);
             updateForm.hidden = false;
         }
 
+        // add listener to update buttons
         for (const updateButton of updateButtons) {
             updateButton.addEventListener('click', handleUpdate);
         }
