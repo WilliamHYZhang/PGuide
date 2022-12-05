@@ -10,29 +10,32 @@
     </h1>
     
     <form action="/feedback" method="post">
+        <input type="hidden" name="id" value="{{ pset.id }}" />  
         <!-- From https://www.w3schools.com/howto/howto_js_rangeslider.asp -->
         <div>
             <label for="rating" class="form-label">Overall Rating: </label>
-            <input type="range" min="1" max="10" class="slider" id="rating">
+            <input type="range" min="1" max="10" class="slider" id="rating" name="rating">
             <span id="value1"></span>
         </div>
         <div>
             <label for="difficulty" class="form-label">Difficulty: </label>
-            <input type="range" min="1" max="10" class="slider" id="difficulty">
+            <input type="range" min="1" max="10" class="slider" id="difficulty" name="difficulty">
             <span id="value2"></span>
         </div>
         <div>
             <label for="enjoyment" class="form-label">Enjoyment: </label>
-            <input type="range" min="1" max="10" class="slider" id="enjoyment">
+            <input type="range" min="1" max="10" class="slider" id="enjoyment" name="enjoyment">
             <span id="value3"></span>
         </div>
         <div class="mb-3">
-            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="hours" name="hours" placeholder="Hours Spent:" type="number">
+            <label for="difficulty" class="form-label">Hours Spent:</label>
+            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="hours" name="hours" placeholder="10" type="number">
         </div>
         <div class="mb-3">
-            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="comments" name="comments" placeholder="Comments:" type="text">
+            <label for="difficulty" class="form-label">Comments:</label>
+            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="comments" name="comments" placeholder="Optional" type="text">
         </div>
-        <button class="btn btn-primary" name="create" type="button" onclick="update()">Submit</button>  
+        <button class="btn btn-primary" name="submit" type="submit">Submit</button>  
         
         <script> // From https://www.w3schools.com/howto/howto_js_rangeslider.asp
             // For the overall rating slider
