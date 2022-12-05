@@ -47,7 +47,8 @@ Clicking on add feedback on the class page, while looged in, will take you to th
 Clicking add feedback will submit the feedback and redirect the user to the class page, where the statistics will be updated with the new feedback.
 
 # For admin
-Log in for admin access
+Log in for admin access on the log in page, which can be reached from the navigation bar on the homepage.
+Use this log in:
 Username: admin
 Password: pguide
 
@@ -67,3 +68,23 @@ The PGuide logo is on the top left. Clicking on the logo will cause the home pag
 On the top right, there is a navigation bar that allows the admin to "log out."
 
 # Create Page
+Clicking on the add class button on the homepage will take the admin to the create page. The create page asks for the class code, class name, and # of PSETs.
+
+Once the admin clicks the create class button after filling out class code, class name, and # of PSETs, new items will appear on the page. Based on the # of PSETs submitted, there will be questions for each PSET that ask for the PSET name and description. After all of PSET names and descriptions are filled in, there is a submit button.
+
+Clicking on the submit button at the bottom of the page will redirect the admin to the homepage.
+
+# Edit Page
+Clicking on one of the edit buttons on the homepage will take the admin to the edit page for the specific class that is being edited. The edit page displays a table with columns for pset name, pset description, and changes. For each pset for the class, the name, description, and options to update or delete the pset is available on the table. At the bottom of the page, there are input boxes for a new PSET name and a new PSET description, with a button to add PSET.
+
+Clicking on the update button for a specific PSET will cause a new row of items to appear on the page. There will be an input box for an updated PSET name under the PSET name column, an input box for an updated PSET description under the PSET description box, and a confirm button under the changes column. Clicking the confirm button will update the PSET name and refresh the edit page with the changes.
+
+Clicking on the delete button for a specific PSET will refresh the edit page and delete the PSET.
+
+Clicking on the add PSET button on the bottom of the page after filling out the new PSET name and description input boxes will refresh the edit page with the new PSET added to the table.
+
+# Class Page
+Same as for all users.
+
+# Feedback Page
+Same as for all users.
