@@ -118,6 +118,7 @@ def logout():
 
 @app.route("/class")
 def class_():
+    # check class code
     if not request.args.get("code"):
         return apology("Must provide class code.", 403)
 
@@ -135,26 +136,33 @@ def class_():
 @login_required
 @admin_required
 def create():
+    # return create page
     if request.method == "GET":
         return render_template("create.html")
     
+    # get code and name
     code = request.form.get("code")
     name = request.form.get("name")
 
     if code is None or name is None:
         return apology("Must provide class code and name.", 403)
 
+    # check class
     class_ = get_class_from_code(code)
 
     if class_ is not None:
         return apology("Class code already exists.", 403)
     
+    # insert new class into classes table
     db.execute("INSERT INTO classes (code, name) VALUES (?, ?)", code, name)
 
+    # get class id
     class_id = db.execute("SELECT MAX(id) FROM classes")[0]["MAX(id)"]
 
+    # get pset count
     psets = int(request.form.get("psets"))
     
+    # populate pset name and description
     for i in range(psets):
         name = request.form.get(f"name_{i+1}")
         description = request.form.get(f"description_{i+1}")
@@ -162,6 +170,7 @@ def create():
         if name is None or description is None:
             return apology("Must provide name and description.", 403)
         
+        # insert pset into psets table with corresponding class_id
         db.execute("INSERT INTO psets (class_id, name, description) VALUES (?, ?, ?)", class_id, name, description)
     
     return redirect("/")
@@ -173,86 +182,106 @@ def create():
 @admin_required
 def edit():
     if request.method == "GET":
+        # get class code
         code = request.args.get("code")
         if not code:
             return apology("Must provide class code.", 403)
 
+        # get class
         class_ = get_class_from_code(code)
         if class_ is None:
             return apology("Invalid class code.", 403)
-
+        
+        # get psets for class
         psets = db.execute("SELECT * FROM psets WHERE class_id = ?", class_["id"])
 
+        # return edit page
         return render_template("edit.html", psets=psets, code=code)
     
-    
+    # get edit method: "create", "delete", or "update"
     edit_method = request.form.get("method")
     if edit_method is None:
         return apology("Must provide edit method.", 403)
 
+    # get code
     code = request.form.get("code")
     if code is None:
         return apology("Must provide class code.")
 
+    # get class
     class_ = get_class_from_code(code)
     if class_ is None:
         return apology("Invalid class code.", 403)
     
     if edit_method == "create":
+        # get name and description
         name = request.form.get("name")
         description = request.form.get("description")
         if name is None or description is None:
             return apology("Must provide name and description.")
         
+        # get code
         code = request.form.get("code")
         if code is None:
             return apology("Invalid class code.", 403)
 
+        # get class
         class_ = get_class_from_code(code)
         if class_ is None:
             return apology("Invalid class code.", 403)
         
-
+        # insert new pset into table
         db.execute("INSERT INTO psets (class_id, name, description) VALUES (?, ?, ?)", class_["id"], name, description)
     
     elif edit_method == "delete":
+        # get pset id
         id = request.form.get("id")
         if id is None:
             return apology("Must provide PSET id.")
         
+        # delete pset
         db.execute("DELETE FROM psets WHERE id = ?", id)
     
     elif edit_method == "update":
+        # get updated name and descrption
         name = request.form.get("name")
         description = request.form.get("description")
         if name is None or description is None:
             return apology("Must provide name and description.")
 
+        # get pset id
         id = request.form.get("id")
         if id is None:
             return apology("Must provide PSET id.")
         
+        # update pset record in table
         db.execute("UPDATE psets SET name = ?, description = ? WHERE id = ?", name, description, id)
     
     else:
-        apology("Invalid ")
+        apology("Invalid edit method.")
+    
+    # redirect back to edit page with class code
     return redirect(f"/edit?code={code}")
 
 @app.route("/feedback", methods=["GET", "POST"])
 @login_required
 def feedback():
     if request.method == "GET":
+        # get pset id
         id = request.args.get("id")
         if not id:
             return apology("Must provide PSET id.", 403)
 
+        # get pset
         pset = get_pset_from_id(id)
         if pset is None:
             return apology("Invalid PSET id.", 403)
         
+        # return feedback page for pset
         return render_template("feedback.html", pset=pset)
         
     if request.method == "POST":
+        # get feedback fields
         id = request.form.get("id")
         rating = request.form.get("rating")
         difficulty = request.form.get("difficulty")
@@ -262,21 +291,25 @@ def feedback():
 
         if None in [id, rating, difficulty, enjoyment, hours, comments]:
             return apology("Must provide all necessary fields.", 403)
-     
+
+        # get pset
         pset = get_pset_from_id(id)
         if pset is None:
             return apology("Invalid PSET id.", 403)
-        
-        print(session)
 
+        # check to see if there already exists feedback for specific user and pset
         current_feedback = db.execute("SELECT id FROM feedback WHERE user_id = ? AND pset_id = ?", session["user_id"], pset["id"])
 
+        # if current feedback doesn't exist, add new record into feedback table
         if len(current_feedback) == 0:
             db.execute("INSERT INTO feedback (user_id, pset_id, rating, hours_spent, difficulty, enjoyment, comments) VALUES (?, ?, ?, ?, ?, ?, ?)", session["user_id"], id, rating, hours, difficulty, enjoyment, comments)
+        # otherwise, update the existing record for user and pset
         else:
             db.execute("UPDATE feedback SET rating = ?, hours_spent = ?, difficulty = ?, enjoyment = ?, comments = ? WHERE user_id = ? AND pset_id = ?", rating, hours, difficulty, enjoyment, comments, session["user_id"], id)
 
+        # get class id and class code
         class_id = pset["class_id"]
         class_code = db.execute("SELECT code FROM classes WHERE id = ?", class_id)[0]["code"]
 
+        # redirect back to class page with class code
         return redirect(f"/class?code={class_code}")
