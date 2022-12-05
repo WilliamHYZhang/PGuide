@@ -24,6 +24,8 @@ The PGuide logo is on the top left. Clicking on the logo will cause the home pag
 
 On the top right, there is a navigation bar that includes "register" and "log in."
 
+If the user is already logged in, the navigation bar will only have "log out."
+
 # Registration Page
 Clicking on register on the homepage will take you to a register page that asks for a username, password, and confirmation of your password. All fields are required, usernames must be unique, and the password and password confirmation must match.
 
@@ -45,4 +47,23 @@ Clicking on add feedback on the class page, while looged in, will take you to th
 Clicking add feedback will submit the feedback and redirect the user to the class page, where the statistics will be updated with the new feedback.
 
 # For admin
+Log in for admin access
+Username: admin
+Password: pguide
 
+# Homepage
+When an admin logs in to PGuide and is redirected to the homepage, the user should be able to view a table that lists the classes. The table has columns for class name and class code, like for all users, but there will also be an edit column. Each class has an edit button under the edit column.
+
+At the bottom of the page, there is also an add class button.
+
+Clicking on the class code will take the admin to a class page with feedback for the psets in that class and the option to add feedback for specific psets, like all users.
+
+Clicking on the edit button will take the admin to an edit page which allows admin to change the # of PSETs by adding or deleting PSETs and change the name and description for existing PSETs.
+
+Clicking on the add class button will take the admin to a create page which allows admin to create new classes for all users to use and see.
+
+The PGuide logo is on the top left. Clicking on the logo will cause the home page to reload.
+
+On the top right, there is a navigation bar that allows the admin to "log out."
+
+# Create Page
