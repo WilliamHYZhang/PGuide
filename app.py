@@ -162,6 +162,9 @@ def create():
     # get pset count
     psets = int(request.form.get("psets"))
     
+    if not psets.isInteger():
+        return apology("# of PSETs must be a value.", 403)
+    
     # populate pset name and description
     for i in range(psets):
         name = request.form.get(f"name_{i+1}")
