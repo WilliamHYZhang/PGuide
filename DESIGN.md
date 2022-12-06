@@ -2,7 +2,7 @@
 
 We began by mapping out the tables that we would need:
 
-The users table includes id, username, password hash, and is_admin. The usernames must be unique to avoid multiple users operating under the same username. Additionally, we decided to create a column for is_admin to store a boolean (true if user has admin access, false if not) instead of creating an entirely new table for admins for concision.
+The users table includes id, username, password hash, and is_admin. The usernames must be unique to avoid multiple users operating under the same username. Password hashes are stored instead of passwords to maintain user privacy. Additionally, we decided to create a column for is_admin to store a boolean (true if user has admin access, false if not) instead of creating an entirely new table for admins for concision.
 
 The classes table includes id, code, and name.
 
@@ -36,9 +36,24 @@ From the homepage, admin also have an option to create classes, which will redir
 
 # html templates
 The login.html and register.html files used code from the finance PSET. 
+We used a layout.html file, based on the finance PSET, to format items that were consistent across all pages (nav bar, logo, created by message). This helped us reduce repetitive code by using style cascading.
+We used the apology.html to display an error code and error message for all user errors.
+
+The index.html file contains a table with columns labeled with class code and class name for all users. An if statement is used to give admins access to an additional column labeled edit. In the body of the table, we use a for loop to iterate through the list of dictionaries from the classes variable in app.py, which is selected from the classes table in SQL. This will show the code and name for each class. Each class code is linked to the class page, specific to the class code. We use an if statement again to give admins access to an edit button for each class that is linked to the edit page, specific to the class code of the class that is selected to be edited. Finally, the create button at the bottom is linked to the create page.
+
+The class.html file contains links to images that display graphs showing the statstics for the class. We chose to calculate and re-visualize the statistics everytime a user ends up on the class page, instead of storing the statistics because ... After the statistics, there is an add feedback button that turns into a dropdown menu when clicked. The dropdown will display the PSET names for the class. Each dropdown item links to the feedback page specific to the selected PSET name and its id. We chose to use this dropdown menu for user convenience and to allow users to choose which PSET to provide feedback to without cluttering the page.
+
+The feedback.html file uses range sliders that range from 1-10, incrementing by 1 for users to provide feedback on overall rating, difficulty, and enjoyment. Javascript is used to show the users the current value of their slider for users to know exactly what feedback they are providing. Feedback for hours spent is provided by an input box that accepts numbers. This input box has arrows that allow users to increment up and down by 1 for ease of use. Comments can be provided by an input box that accepts text; however, comments are optional if users do not have more to add. The submit button is used to send the information to the backend.
+
+The create.html file has an initial form to ask for class code, name, and # of PSETs, followed by a create button. Once the create button is clicked, new items appear asking for names and descriptions for the # of PSETs that is specified earlier. This is down using Javascript. We chose to use Javascript to display these new items because it created a flow in user usage. A submit button is in the Javascript code to submit all the information for creating PSETs while creating the class.
+
+The edit.html file contains a table with columns labeled with PSET name, PSET description, and change. In the body of the table, we use a for loop to iterate through the list of dictionaries from the psets variable in app.py, which is selected from the psets table in SQL. This will show the name and description for each PSET. Each PSET has an update button and a delete button in the change column. The delete button is a link to the edit page where the PSET name and description for the deleted items are hidden. There is also a hidden form that asks for updated PSET name and updated PSET description with a confirm button. Using Javascript, we have an event listener for clicking the update button that will reveal the hidden form. Finally, there is another form, outside of the table, that asks for new PSET name and new PSET description, with an add PSET button to submit the form and create a new PSET.
 
 # app.py
 
+# helpers.py
+
 # styles.css
+We used a styles.css file to design the nav bar and the buttons we used. We chose to have a css file outside of the html because the same style is used across multiple pages, so a single, separate CSS file applies to all the pages, which is also helpful for scaleability. We also chose to use a crimson shade for our buttons and logo for Harvard!
 
 # javascript

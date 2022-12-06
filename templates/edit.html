@@ -24,9 +24,11 @@
                     <td class="text-start">
                         <div class="container">
                             <div class="row">
+                                <!-- Update button -->
                                 <div class="col-sm-2">
                                     <button class="btn btn-primary update pset-id-{{ pset.id }}">Update</button>
                                 </div>
+                                <!-- Delete button -->
                                 <div class="col-sm-2">
                                     <form action="/edit" method="POST">
                                         <input type="hidden" name="method" value="delete" />
@@ -39,6 +41,7 @@
                         </div>
                     </td>
                 </tr>
+                <!-- Hidden form that is displayed when update button is clicked-->
                 <tr hidden class="form-pset-id-{{ pset.id }}">
                     <form action="/edit" method="POST">
                         <input type="hidden" name="method" value="update" />
