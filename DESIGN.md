@@ -50,8 +50,34 @@ The create.html file has an initial form to ask for class code, name, and # of P
 The edit.html file contains a table with columns labeled with PSET name, PSET description, and change. In the body of the table, we use a for loop to iterate through the list of dictionaries from the psets variable in app.py, which is selected from the psets table in SQL. This will show the name and description for each PSET. Each PSET has an update button and a delete button in the change column. The delete button is a link to the edit page where the PSET name and description for the deleted items are hidden. There is also a hidden form that asks for updated PSET name and updated PSET description with a confirm button. Using Javascript, we have an event listener for clicking the update button that will reveal the hidden form. Finally, there is another form, outside of the table, that asks for new PSET name and new PSET description, with an add PSET button to submit the form and create a new PSET.
 
 # app.py
-
+The first function in app.py is index, where we render the “index.html” template to show the list of all classes.
+ 
+The next three functions in app.py are register, login, and logout, adapted from the Finance PSET. If Register is accessed via a GET request, the “register.html” template will be rendered to let the user register for a new account. If Register is accessed via a POST request, it has various error checking methods, and stores each username and associated hashed password in the users database. It then redirects the user to the index page. If Login is accessed via a GET request, the “login.html” template will be rendered to let the user log into an existing account. If Login is accessed via a POST request, it has various error checking methods, and creates a session ID for the user if the login is successful. It then redirects the user to the index page. The logout function will forget the existing user’s session ID and return them to the index page.
+ 
+The next function in app.py is class_, which pulls up the respective class page. It first does some error handling to make sure the class code is valid, then it generates all of the data visualizations that will be shown on the page. These include summary statistics on average difficulty/hours spent/enjoyment/rating, as well as visualizations across PSETs for these. It also displays comments given by users.
+ 
+The next function in app.py is create (admin only), which allows the admin to create a new class. If it is accessed via a GET request, it will take the admin to the “create.html” page, where the admin can enter in info for a new class. If it is accessed via a POST request, it has various error checking methods, and inserts class and PSET info into their respective tables. It then redirects the admin back to the index page.
+ 
+The next function in app.py is edit (admin only), which allows the admin to edit an existing class. If accessed via a GET request, it will take the admin to the respective “edit.html” page, where the admin can edit info for the class. If accessed via a POST request, the backend will take in the necessary information, such as class code, name, and description, and either create, delete, or update a pset for the specific class.
+ 
+The final function in app.py is feedback, which allows a user to add feedback for a class. If accessed via a GET request, it will take the user to the feedback page for the respective PSET. If accessed via a POST request, it will conduct error handling and populate the feedback table with each respective entry. It will then redirect the user to the class page.
+ 
 # helpers.py
+We used a helpers.py file to store functions that were repeatedly called in app.py.
+
+The apology function renders an apology message to the user, if there are any user errors while accessing the site.
+ 
+The login_required function decorates routes to require login.
+ 
+The is_login function checks whether a user is logged in.
+ 
+The admin_required function decorates routes to require admin login.
+ 
+The is_admin function checks whether a user is an admin, returning True if so and False if not.
+ 
+The get_class_from_code function gets everything in the classes table based on the class code.
+ 
+The get_pset_from_id function gets everything in the psets table based on the PSET id.
 
 # styles.css
 We used a styles.css file to design the nav bar and the buttons we used. We chose to have a css file outside of the html because the same style is used across multiple pages, so a single, separate CSS file applies to all the pages, which is also helpful for scaleability. We also chose to use a crimson shade for our buttons and logo for Harvard!
