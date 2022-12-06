@@ -144,7 +144,9 @@ def class_():
 
     # get all the unique pset_ids for the class
     pset_ids = df["pset_id"].unique()
-        
+    
+    comments = []
+
     for pset_id in pset_ids:
         # filter stats by each PSET
         df_pset = df[df['pset_id'] == pset_id]
@@ -153,7 +155,13 @@ def class_():
         new_row = pd.Series({'pset_id':pset_id, 'pset_name':df_pset['name'].tolist()[0], 'avg_rating':df_pset['rating'].mean(), 'avg_hours':df_pset['hours_spent'].mean(), 'avg_difficulty':df_pset['difficulty'].mean(), 'avg_enjoyment':df_pset['enjoyment'].mean()})
         df_analysis = pd.concat([df_analysis, new_row.to_frame().T], ignore_index=True)
 
-        print(df_pset.describe())
+        # add comments
+        comments.append({
+            'name': df_pset['name'].tolist()[0],
+            'comments': [comment for comment in df_pset['comments'].tolist() if comment != ""]
+        })
+    
+    print(comments)
     
     for property in ["avg_rating", "avg_difficulty", "avg_enjoyment", "avg_hours"]:
         # convert visualization to image
@@ -169,7 +177,7 @@ def class_():
     # convert analysis DataFrame to list of dictionaries
     dict_analysis = df_analysis.to_dict('records')
 
-    return render_template("class.html", class_ = class_, psets=psets, analysis=dict_analysis)
+    return render_template("class.html", class_ = class_, psets=psets, analysis=dict_analysis, comments=comments)
 
 
 @app.route("/create", methods=["GET", "POST"])
