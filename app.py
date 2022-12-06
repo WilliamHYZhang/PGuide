@@ -292,12 +292,15 @@ def feedback():
         hours = request.form.get("hours")
         comments = request.form.get("comments")
 
-        if None in [id, rating, difficulty, enjoyment, hours, comments]:
+        feedback_fields = [id, rating, difficulty, enjoyment, hours, comments]
+
+        if None in feedback_fields:
             return apology("Must provide all necessary fields.", 403)
 
-        #TODO: Must be int for rating, difficulty, enjoyment, hours
-        #if ...
-        #    return apology("Must provide integer value.", 403)
+        # must be int for rating, difficulty, enjoyment, hours
+        for field in feedback_fields[1:5]:
+            if not isinstance(field, int):
+                return apology("Must provide integer value.", 403)
 
         # get pset
         pset = get_pset_from_id(id)
