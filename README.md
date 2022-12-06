@@ -1,36 +1,16 @@
 # PGuide Description
 A web application that allows users to view and provide feedback on specific psets for their classes.
 
+# Video Overview
+https://youtu.be/PTfuYAnGATM
+
 # Background
 Harvard currently has a QGuide, which allows students to view and provide feedback for courses that they have taken. However, no such resource exists for PSETs. Students might want to know which PSETs will be harder and take longer to plan out their weeks. It may be helpful to read feedback from other students, like if TFs were helpful. All of this can be accomplished with a PGuide, or a QGuide for PSETs.
 
 Anyone will be able to view feedback for PSETs for classes. Users must log in to give feedback. Admins can create the classes and the PSETs that users will use.
 
 # Installation
-Execute cd in VS Code.
-
-Next execute
-wget ...
-in order to download a ZIP called pguide.zip into VS Code.
-
-Then execute
-unzip pguide.zip
-to create a folder called pguide. 
-
-You no longer need the ZIP file, so you can execute
-rm pguide.zip
-and respond with “y” followed by Enter at the prompt to remove the ZIP file you downloaded.
-
-Now type
-cd pguide
-followed by Enter to move yourself into (i.e., open) that directory. Your prompt should now resemble the below.
-
-pguide/ $
-Execute ls by itself, and you should see a few files and folders:
-
-app.py  DESIGN.md  helpers.py  README.md pguide.db requirements.txt  schema.sql static/  templates/
-
-Also, install the required programs by running
+Install the required programs by running
 pip install -r requirements.txt
 
 We use `sqlite3` for our backend database.
@@ -64,7 +44,7 @@ Clicking on log in on the homepage will take you to a log in page that asks for 
 After logging in, the user will be returned to the home page.
 
 # Class Page
-Clicking on a class code on the homepage will take you to the class' page. The page will display the statistics (average overall rating, average difficulty rating, average enjoyment, distribution of hours spent, and comments) for every PSET based on feedback from users. This page also displays the overview statistics for the class, showing graphs of a comparison of overall rating, difficulty, enjoyment, and hours spent across different PSETs. Users have the option to download graphs, zoom in/out, pan, select, autoscale and reset axis.
+Clicking on a class code on the homepage will take you to the class' page. The page will display the statistics (average overall rating, average difficulty rating, average enjoyment, distribution of hours spent, and comments) for every PSET based on feedback from users. This page also displays the overview statistics for the class, showing graphs of a comparison of overall rating, difficulty, enjoyment, and hours spent across different PSETs. Users have the option to download graphs, zoom in/out, pan, select, autoscale and reset axis. Users can also hover over the graphs to get information on what each bar is showing.
 
 At the bottom of the page, there is an add feedback button that will prompt a dropdown selection of all of the PSETs. If the user is not logged in, choosing a PSET to add feedback to will direct them to the log in page. If the user is logged in, hoosing a PSET to add feedback to will direct them to the feedback page.
 
