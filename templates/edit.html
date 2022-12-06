@@ -25,11 +25,11 @@
                         <div class="container">
                             <div class="row">
                                 <!-- Update button -->
-                                <div class="col-sm-2">
+                                <div class="col-sm-3">
                                     <button class="btn btn-primary update pset-id-{{ pset.id }}">Update</button>
                                 </div>
                                 <!-- Delete button -->
-                                <div class="col-sm-2">
+                                <div class="col-sm-3">
                                     <form action="/edit" method="POST">
                                         <input type="hidden" name="method" value="delete" />
                                         <input type="hidden" name="id" value="{{ pset.id }}" />
