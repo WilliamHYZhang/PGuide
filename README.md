@@ -64,7 +64,7 @@ Clicking on log in on the homepage will take you to a log in page that asks for 
 After logging in, the user will be returned to the home page.
 
 # Class Page
-Clicking on a class code on the homepage will take you to the class' page. This page displays the overview statistics for the class, showing graphs of a comparison of overall rating, difficulty, enjoyment, and hours spent across different PSETs. The page also displays the statistics (average overall rating, average difficulty rating, average enjoyment, distribution of hours spent, and comments) for every PSET based on feedback from users.
+Clicking on a class code on the homepage will take you to the class' page. The page will display the statistics (average overall rating, average difficulty rating, average enjoyment, distribution of hours spent, and comments) for every PSET based on feedback from users. This page also displays the overview statistics for the class, showing graphs of a comparison of overall rating, difficulty, enjoyment, and hours spent across different PSETs. Users have the option to download graphs, zoom in/out, pan, select, autoscale and reset axis.
 
 At the bottom of the page, there is an add feedback button that will prompt a dropdown selection of all of the PSETs. If the user is not logged in, choosing a PSET to add feedback to will direct them to the log in page. If the user is logged in, hoosing a PSET to add feedback to will direct them to the feedback page.
 
