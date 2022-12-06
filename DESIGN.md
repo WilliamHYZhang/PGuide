@@ -57,3 +57,4 @@ The edit.html file contains a table with columns labeled with PSET name, PSET de
 We used a styles.css file to design the nav bar and the buttons we used. We chose to have a css file outside of the html because the same style is used across multiple pages, so a single, separate CSS file applies to all the pages, which is also helpful for scaleability. We also chose to use a crimson shade for our buttons and logo for Harvard!
 
 # javascript
+We chose to keep the Javascript within the html files because the script for different pages had no overlap, so we wanted to minimize the number of code files.
