@@ -35,6 +35,28 @@
 
 <div class="p-5"></div>
 
+
+<h2>Comments</h2>
+{% for pset in comments %}
+<table class="table">
+    <thead>
+        <tr>
+            <th>{{ pset.name }} Comments</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for comment in pset.comments %}
+        <tr>
+            <td class="text-start">{{ comment }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endfor %}
+
+
+<div class="p-5"></div>
+
 {% if analysis|length > 0 %}
     <h2>Graph Visualizations</h2>
     {% include 'plots/%s-avg_rating.html' %class_["code"] %}
