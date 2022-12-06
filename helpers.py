@@ -24,6 +24,7 @@ def login_required(f):
     return decorated_function
 
 def is_login():
+    # return if user is logged in
     return session.get("user_id") is not None
 
 def admin_required(f):
@@ -45,6 +46,7 @@ def admin_required(f):
     return decorated_function
 
 def is_admin():
+    # return if user is admin
     user_id = session.get("user_id")
     if user_id is None:
         return False
@@ -54,9 +56,11 @@ def is_admin():
     return user["is_admin"]
 
 def get_class_from_code(code):
+    # get class from code
     classes = db.execute("SELECT * FROM classes WHERE code = ?", code)
     return classes[0] if len(classes) == 1 else None
 
 def get_pset_from_id(id):
+    # get pset from id
     psets = db.execute("SELECT * FROM psets WHERE id = ?", id)
     return psets[0] if len(psets) == 1 else None
