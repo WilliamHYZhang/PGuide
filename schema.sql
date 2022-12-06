@@ -4,6 +4,6 @@ CREATE TABLE classes (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, code TEXT N
 CREATE UNIQUE INDEX code on classes (code);
 CREATE TABLE psets (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, class_id INTEGER NOT NULL, name TEXT NOT NULL, description TEXT NOT NULL, FOREIGN KEY (class_id) REFERENCES classes(id));
 CREATE INDEX class_id on psets (class_id);
-CREATE TABLE feedback (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, user_id INTEGER NOT NULL, pset_id INTEGER NOT NULL, rating INTEGER NOT NULL, hours_spent INTEGER NOT NULL, difficulty INTEGER NOT NULL, enjoyment TEXT NOT NULL, comments TEXT NOT NULL, FOREIGN KEY (user_id) REFERENCES users(id), FOREIGN KEY (pset_id) REFERENCES psets(id));
+CREATE TABLE feedback (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, user_id INTEGER NOT NULL, pset_id INTEGER NOT NULL, rating INTEGER NOT NULL, hours_spent INTEGER NOT NULL, difficulty INTEGER NOT NULL, enjoyment INTEGER NOT NULL, comments TEXT NOT NULL, FOREIGN KEY (user_id) REFERENCES users(id), FOREIGN KEY (pset_id) REFERENCES psets(id));
 CREATE INDEX pset_id on feedback (pset_id);
 CREATE INDEX user_id on feedback (user_id);

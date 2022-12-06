@@ -5,6 +5,44 @@
 {% endblock %}
 
 {% block main %}
+
+<h2>Data Table</h2>
+
+<table class="table">
+    
+    <!-- Table labels class code and class name as columns for all users -->
+    <thead>
+        <tr>
+            <th class="text-start">PSET Name</th>
+            <th class="text-start">Average Rating</th>
+            <th class="text-start">Average Difficulty</th>
+            <th class="text-start">Average Enjoyment</th>
+            <th class="text-start">Average Hours</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for pset in analysis %}
+        <tr>
+            <td class="text-start">{{ pset.pset_name }}</td>
+            <td class="text-start">{{ pset.avg_rating }}</td>
+            <td class="text-start">{{ pset.avg_difficulty}}</td>
+            <td class="text-start">{{ pset.avg_enjoyment }}</td>
+            <td class="text-start">{{ pset.avg_hours }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<div class="p-5"></div>
+
+{% if analysis|length > 0 %}
+    <h2>Graph Visualizations</h2>
+    {% include 'plots/%s-avg_rating.html' %class_["code"] %}
+    {% include 'plots/%s-avg_difficulty.html' %class_["code"] %}
+    {% include 'plots/%s-avg_enjoyment.html' %class_["code"] %}
+    {% include 'plots/%s-avg_hours.html' %class_["code"] %}
+{% endif %}
+
 <div class="dropdown">
     <!-- Add feedback button that will prompt a dropdown selection -->
     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown">

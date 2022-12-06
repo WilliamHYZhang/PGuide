@@ -8,9 +8,10 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 import numpy as np
 import pandas as pd
+import plotly
 import plotly.express as px
 
-from helpers import apology, login_required, admin_required, is_login, is_admin, get_class_from_code, get_pset_from_id
+from helpers import apology, login_required, admin_required, is_admin, get_class_from_code, get_pset_from_id
 
 # Configure application
 app = Flask(__name__)
@@ -22,6 +23,9 @@ Session(app)
 
 # Configure CS50 Library to use SQLite database
 db = SQL("sqlite:///pguide.db")
+
+# auto reload templates
+app.config['TEMPLATES_AUTO_RELOAD'] = True
 
 @app.after_request
 def after_request(response):
@@ -122,15 +126,51 @@ def class_():
     if not request.args.get("code"):
         return apology("Must provide class code.", 403)
 
+    # get class
     class_ = get_class_from_code(request.args.get("code"))
     if class_ is None:
         return apology("Invalid class code.", 403)
 
-    # TODO: statistics
-
+    # get PSET data and overall PSET statistics for selected class
     psets = db.execute("SELECT * FROM psets WHERE class_id = ?", class_["id"])
+    stats = db.execute("SELECT * FROM feedback JOIN psets ON feedback.pset_id = psets.id WHERE psets.class_id = ?", class_["id"])
 
-    return render_template("class.html", class_ = class_, psets=psets, is_login=is_login())
+    if len(stats) == 0:
+        return render_template("class.html", class_ = class_, psets=psets, analysis=[])
+
+    # convert stats to DataFrame and create new DataFrame for analysis
+    df = pd.DataFrame(stats)
+    df_analysis = pd.DataFrame()
+
+    # get all the unique pset_ids for the class
+    pset_ids = df["pset_id"].unique()
+        
+    for pset_id in pset_ids:
+        # filter stats by each PSET
+        df_pset = df[df['pset_id'] == pset_id]
+
+        # add stats to analysis DataFrame
+        new_row = pd.Series({'pset_id':pset_id, 'pset_name':df_pset['name'].tolist()[0], 'avg_rating':df_pset['rating'].mean(), 'avg_hours':df_pset['hours_spent'].mean(), 'avg_difficulty':df_pset['difficulty'].mean(), 'avg_enjoyment':df_pset['enjoyment'].mean()})
+        df_analysis = pd.concat([df_analysis, new_row.to_frame().T], ignore_index=True)
+
+        print(df_pset.describe())
+    
+    for property in ["avg_rating", "avg_difficulty", "avg_enjoyment", "avg_hours"]:
+        # convert visualization to image
+        display_name = property.split('_')[1].capitalize()
+        fig = px.bar(df_analysis, x='pset_name', y=property, labels={'pset_name': 'PSET Name', property: f"Average {display_name}"}, title=f'{class_["name"]} PSET Ratings')
+        fig.update_layout(title={'text': f'Average {class_["name"]} PSET {display_name}', 'y':0.9, 'x':0.5})
+        if property != 'avg_hours':
+            fig.update_layout(yaxis=dict(range=[0,10]))
+
+        # save as html
+        plotly.offline.plot(fig, filename=f'templates/plots/{class_["code"]}-{property}.html', auto_open=False)
+
+    # convert analysis DataFrame to list of dictionaries
+    dict_analysis = df_analysis.to_dict('records')
+
+    return render_template("class.html", class_ = class_, psets=psets, analysis=dict_analysis)
+
 
 @app.route("/create", methods=["GET", "POST"])
 @login_required
@@ -160,11 +200,11 @@ def create():
     class_id = db.execute("SELECT MAX(id) FROM classes")[0]["MAX(id)"]
 
     # get pset count
-    psets = int(request.form.get("psets"))
-    
-    if not psets.isInteger():
+    try:
+        psets = int(request.form.get("psets"))
+    except:
         return apology("# of PSETs must be a value.", 403)
-    
+
     # populate pset name and description
     for i in range(psets):
         name = request.form.get(f"name_{i+1}")
@@ -296,11 +336,6 @@ def feedback():
 
         if None in feedback_fields:
             return apology("Must provide all necessary fields.", 403)
-
-        # must be int for rating, difficulty, enjoyment, hours
-        for field in feedback_fields[1:5]:
-            if not isinstance(field, int):
-                return apology("Must provide integer value.", 403)
 
         # get pset
         pset = get_pset_from_id(id)
